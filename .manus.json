@@ -1,0 +1,24 @@
+{
+  "name": "King Cup Web",
+  "description": "Web-Version der Beer Pong Turnier-App für Spieler",
+  "type": "web",
+  "framework": "react",
+  "buildCommand": "pnpm build",
+  "startCommand": "pnpm dev",
+  "outputDirectory": "dist",
+  "port": 5173,
+  "environment": {
+    "NODE_ENV": "production"
+  },
+  "scripts": {
+    "dev": "pnpm dev",
+    "build": "pnpm build",
+    "preview": "pnpm preview"
+  },
+  "metadata": {
+    "category": "sports",
+    "tags": ["beer-pong", "tournament", "game", "web-app"],
+    "version": "1.0.0",
+    "author": "Beer Pong Team"
+  }
+}
