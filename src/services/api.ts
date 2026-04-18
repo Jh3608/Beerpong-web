@@ -41,39 +41,35 @@ export interface Tournament {
 
 export const apiService = {
   async joinTournament(shareCode: string, playerName: string): Promise<{ tournament: Tournament; playerId: string }> {
-    const response = await api.post('/tournaments/sync', {
-      shareCode,
-    });
+    const response = await api.get(`/tournaments/download?shareCode=${encodeURIComponent(shareCode)}`);
     return { tournament: response.data.tournament, playerId: `player_${Date.now()}` };
   },
 
-  async getTournament(tournamentId: string): Promise<Tournament> {
-    const response = await api.get(`/tournaments/${tournamentId}`);
-    return response.data;
+  async getTournament(shareCode: string): Promise<Tournament> {
+    const response = await api.get(`/tournaments/download?shareCode=${encodeURIComponent(shareCode)}`);
+    return response.data.tournament;
   },
 
-  async selectTeam(tournamentId: string, playerId: string, teamId: string): Promise<void> {
-    await api.post(`/tournaments/${tournamentId}/select-team`, {
-      playerId,
-      teamId,
-    });
+  async selectTeam(shareCode: string, playerId: string, teamId: string): Promise<void> {
+    // Team selection is handled locally in the app
+    // No backend call needed
   },
 
-  async getPlayerStats(tournamentId: string, playerId: string): Promise<any> {
-    const response = await api.get(`/tournaments/${tournamentId}/player-stats/${playerId}`);
-    return response.data;
+  async getPlayerStats(shareCode: string, playerId: string): Promise<any> {
+    // Player stats are calculated from tournament data
+    // No separate backend call needed
+    return {};
   },
 
-  async getPlayerMatchHistory(tournamentId: string, playerId: string): Promise<Match[]> {
-    const response = await api.get(`/tournaments/${tournamentId}/player-matches/${playerId}`);
-    return response.data;
+  async getPlayerMatchHistory(shareCode: string, playerId: string): Promise<Match[]> {
+    // Match history is part of tournament data
+    // No separate backend call needed
+    return [];
   },
 
-  async registerPushToken(tournamentId: string, playerId: string, token: string): Promise<void> {
-    await api.post(`/tournaments/${tournamentId}/register-push-token`, {
-      playerId,
-      token,
-    });
+  async registerPushToken(shareCode: string, playerId: string, token: string): Promise<void> {
+    // Push token registration is optional
+    // No backend call needed for now
   },
 };
 
