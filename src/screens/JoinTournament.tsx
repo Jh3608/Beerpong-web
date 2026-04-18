@@ -83,8 +83,8 @@ export default function JoinTournament() {
               type="text"
               value={shareCode}
               onChange={(e) => setShareCode(e.target.value.toUpperCase())}
-              placeholder="z.B. ABC123"
-              maxLength={6}
+              placeholder="z.B. ABC123DEF456"
+              maxLength={12}
               className="w-full px-4 py-3 bg-surface border border-border rounded-lg text-foreground placeholder-muted focus:outline-none focus:ring-2 focus:ring-primary uppercase"
               disabled={loading}
             />
