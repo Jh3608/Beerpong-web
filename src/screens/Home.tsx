@@ -13,11 +13,12 @@ export default function Home() {
   const [tournament, setTournament] = useState<Tournament | null>(state?.tournament || null);
   const [playerId] = useState(state?.playerId || '');
   const [loading, setLoading] = useState(!tournament);
+  const shareCode = storageService.getShareCode();
 
   const fetchTournament = async () => {
-    if (!tournamentId) return;
+    if (!shareCode) return;
     try {
-      const data = await apiService.getTournament(tournamentId);
+      const data = await apiService.getTournament(shareCode);
       setTournament(data);
     } catch (error) {
       console.error('[Home] Error fetching tournament:', error);
@@ -30,10 +31,10 @@ export default function Home() {
     if (!tournament) {
       fetchTournament();
     }
-  }, [tournamentId]);
+  }, [shareCode]);
 
   // Poll for updates every 5 seconds
-  usePolling(fetchTournament, 5000, !!tournamentId);
+  usePolling(fetchTournament, 5000, !!shareCode);
 
   if (loading || !tournament) {
     return (
