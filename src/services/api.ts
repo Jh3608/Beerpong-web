@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://beerpongapp-rtshsyxf.manus.space/api';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://beerpongapp-rtshsyxf.manus.space/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -41,11 +41,10 @@ export interface Tournament {
 
 export const apiService = {
   async joinTournament(shareCode: string, playerName: string): Promise<{ tournament: Tournament; playerId: string }> {
-    const response = await api.post('/tournaments/join', {
+    const response = await api.post('/tournaments/sync', {
       shareCode,
-      playerName,
     });
-    return response.data;
+    return { tournament: response.data.tournament, playerId: `player_${Date.now()}` };
   },
 
   async getTournament(tournamentId: string): Promise<Tournament> {
